@@ -1,0 +1,227 @@
+/* css reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Radio Canada Big", sans-serif;
+    position: relative;
+  }
+
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  input, button, textarea, select {
+    font: inherit;
+  }
+
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+/* css reset */
+
+/* home page */
+header {
+    background-image: url("alex-litvin-MAYsdoYpGuk-unsplash.jpg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    background-size: 100%;
+    background-color: #0E0E0E;
+    color: white;
+    height: 25vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1em;
+    font-weight: 800;
+    font-size: 1.35rem;
+    letter-spacing: 0.001em;
+}
+
+header a {
+    font-size: 0.875rem;
+}
+
+.search-bar {
+  position: absolute;
+  top: 22.5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2E2E2F;
+  color: #A5A5A5;
+  border-radius: 6px;
+  width: 85%;
+  min-width: 400px;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar i {
+  font-size: 1.25rem;
+  padding: 8px 15px;
+}
+
+input {
+  background-color: #2E2E2F;
+  color: #A5A5A5;
+  border: none;
+  font-size: 0.875rem;
+  width: 75%;
+  padding: 8px;
+}
+
+input:focus {
+  background-color: #2E2E2F;
+}
+
+main {
+    background-color: #121212;
+    color: #2E2E2F;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.875em;
+}
+
+.icon {
+    font-size: 3.5em;
+    margin-top: 1em;
+    margin-bottom: 0.2em;
+}
+
+.search-results-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 40px;
+  border: 2px solid pink;
+  height: 75vh;
+  /* width: 100vw; */
+}
+
+.movie {
+  color: whitesmoke;
+  width: 100%;
+  height: 14.286em;
+  display: flex;
+  align-items: center;
+  border: 2px solid blue;
+  font-size: 0.875rem;
+  padding: 2.429em 3.143em;
+}
+
+.movie-img-container{
+  height: 9.188em;
+  min-width: 6.188em;
+  max-width: 6.188em;
+  border: 2px solid green;
+}
+
+.movie img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.movie-info {
+  text-align: left;
+  margin-left: 1.5em;
+  flex-grow: 1;
+}
+
+.movie h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.info-line {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  font-size: 0.75rem;
+  margin: 0.625em 0;
+}
+
+#movie-search-err {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 10em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+}
+
+/* buttons */
+a:hover,
+a:focus,
+.add-btn p:hover,
+.add-btn p:focus,
+.remove-btn p:hover, 
+.remove-btn p:focus  {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: #0e0e0e;
+  cursor: pointer;
+}
+
+.search-bar button {
+  color: white;
+  background-color: #4B4B4B;
+  border: none;
+  font-size: 0.875rem;
+  margin-left: auto;
+  align-self: stretch;
+  padding: 0 2.51em;
+  border-radius: 0 4px 4px 0;
+}
+
+.add-btn,
+.remove-btn {
+  background-color: transparent;
+  color: whitesmoke;
+  border: none;
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+}
+
+/* watchlist page */
+
+.watchlist-main {
+  height: 75vh;
+  align-content: center;
+}
+
+.watchlist-placeholder {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  transform: translateY(-100%);
+}
+
+.fa-circle-plus,
+.fa-circle-minus,
+.add-movies-wrapper span {
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 20px;
+  color: whitesmoke;
+}
+
+.add-movies-wrapper {
+  transform: translateY(-100%);
+}
+
+.add-movies-wrapper a {
+  text-decoration: none;
+}
