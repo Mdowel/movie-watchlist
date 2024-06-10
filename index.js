@@ -176,14 +176,32 @@ function updateWatchlist() {
     
                 </div>
                 <div class="movie-plot">
-                    <p class="truncated-plot">${truncatedPlot}</p>
-                    <p class="full-plot" style="display: none">${movie.Plot}</p>
-                    <button class="full-description-btn">More</button>
+                    <span class="truncated-plot">${truncatedPlot}</span>
+                    <span class="full-plot hidden">${movie.Plot}</span>
+                    ${movie.Plot.length > 150 ? '<button class="full-description-btn">More</button>' : ''}
                 </div>
             </div>
             `
             watchlistMainEl.appendChild(movieEl)
         })
+        const moreInfoBtns = document.querySelectorAll(".full-description-btn")
+        moreInfoBtns.forEach(btn => {
+            btn.addEventListener("click", function() {
+                const plotContainer = btn.parentElement
+                const truncatedPlot = plotContainer.querySelector('.truncated-plot')
+                const movieFullPlot = plotContainer.querySelector('.full-plot')
+
+                if(truncatedPlot.classList.contains("hidden")){
+                    truncatedPlot.classList.remove("hidden")
+                    movieFullPlot.classList.add("hidden")
+                    btn.innerText = "More"
+                }else {
+                    truncatedPlot.classList.add("hidden")
+                    movieFullPlot.classList.remove("hidden")
+                    btn.innerText = "Less"
+                }
+            })
+        }) 
     }
 
     const removeFromWatchlistBtns = document.querySelectorAll('.remove-btn')
