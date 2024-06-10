@@ -109,7 +109,6 @@ main {
   flex-direction: column;
   padding-top: 40px;
   height: 75vh;
-  /* width: 100vw; */
 }
 
 .movie {
@@ -171,9 +170,7 @@ main {
 #movie-search-err {
   font-size: 1.25rem;
   font-weight: 700;
-  margin-top: 10em;
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
   width: 400px;
 }
 
