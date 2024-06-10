@@ -1,11 +1,15 @@
 const searchBtn = document.getElementById("search-btn")
 const searchInput = document.getElementById("search-input")
 const searchResultsContainer = document.getElementById("search-results-container")
-const watchlistMainEl = document.getElementById("watchlist-container")
+const watchlistMainEl = document.getElementById("watchlist-main")
+
+// get watchlist from local storage //
 
 let watchlist = JSON.parse(localStorage.getItem('watchlist')) || []
 
 document.addEventListener('DOMContentLoaded', updateWatchlist)
+
+// search for movies //
 
 searchBtn.addEventListener("click", function(e) {
     e.preventDefault()
@@ -14,109 +18,6 @@ searchBtn.addEventListener("click", function(e) {
         searchMovies(query)
     }
 })
-
-function displayResults(movies) {
-    searchResultsContainer.innerHTML = ''
-
-    if (movies) {
-        movies.forEach(movie => {
-            const movieEl = document.createElement("div")
-            movieEl.className = "movie"
-            movieEl.innerHTML = `
-            <div class="movie-img-container">
-                <img src=${movie.Poster} alt="movie poster">
-            </div>
-            
-            <div class="movie-info">
-                <div class="info-line">
-                    <h3>${movie.Title}</h3><div>${movie.Ratings[0].Value}</div><div>${movie.Year}</div>
-                </div>
-                <div class="info-line">
-                    <div>${movie.Runtime}</div><div> ${movie.Genre}</div>
-
-                    <button class="add-btn">
-                        <i class="fa-solid fa-circle-plus"></i>
-                        <p>Add to Watchlist</p>
-                    </button>
-
-                </div>
-                <div>${movie.Plot}</div>
-            </div>
-            `
-            searchResultsContainer.style.height = "100%"
-            searchResultsContainer.appendChild(movieEl)
-        })
-
-        const addToWatchlistBtns = document.querySelectorAll('.add-btn')
-        addToWatchlistBtns.forEach((btn, index) => {
-            btn.addEventListener('click', function() {
-                const movie = movies[index]
-                addToWatchlist(movie)
-            })
-        })
-    }
-}
-
-function addToWatchlist(movie) {
-    if (!watchlist.some(m => m.imdbID === movie.imdbID))
-    watchlist.push(movie)
-    saveWatchlist()
-    updateWatchlist()
-}
-
-function updateWatchlist() {
-    watchlistMainEl.innerHTML = ''
-    if (watchlist.length === 0) {
-        watchlistMainEl.innerHTML = `
-        <div class="watchlist-placeholder">Your watchlist is looking a little empty...</div>
-        `
-    } else {
-        watchlist.forEach((movie, index) => {
-            const movieEl = document.createElement("div")
-            movieEl.classList = "movie"
-            movieEl.innerHTML = `
-            <div class="movie-img-container">
-                <img src=${movie.Poster} alt="movie poster">
-            </div>
-            
-            <div class="movie-info">
-                <div class="info-line">
-                    <h3>${movie.Title}</h3><div>${movie.Ratings[0].Value}</div><div>${movie.Year}</div>
-                </div>
-                <div class="info-line">
-                    <div>${movie.Runtime}</div><div> ${movie.Genre}</div>
-    
-                    <button class="remove-btn">
-                        <i class="fa-solid fa-circle-minus"></i>
-                        <p>Remove</p>
-                    </button>
-    
-                </div>
-                <div>${movie.Plot}</div>
-            </div>
-            `
-            watchlistMainEl.appendChild(movieEl)
-        })
-    }
-
-    const removeFromWatchlistBtns = document.querySelectorAll('.remove-btn')
-    removeFromWatchlistBtns.forEach((btn, index) => {
-        btn.addEventListener("click", function() {
-            const index = btn.getAttribute('data-index')
-            removeFromWatchlist(index)
-        })
-    })
-}
-
-function removeFromWatchlist(index) {
-    watchlist.splice(index, 1)
-    saveWatchlist()
-    updateWatchlist()
-}
-
-function saveWatchlist() {
-    localStorage.setItem('watchlist', JSON.stringify(watchlist))
-}
 
 function searchMovies(query) {
     fetch(`http://www.omdbapi.com/?s=${encodeURIComponent(query)}&apikey=488e4582`)
@@ -157,6 +58,153 @@ function getMovieDetails(imdbID) {
             return null
         })
 }
+
+// display search results //
+
+function displayResults(movies) {
+    searchResultsContainer.innerHTML = ''
+
+    if (movies) {
+        movies.forEach(movie => {
+            const truncatedPlot = movie.Plot.length > 150 ? movie.Plot.substring(0, 150) + '...' : movie.Plot
+
+            const movieEl = document.createElement("div")
+            movieEl.className = "movie"
+            movieEl.innerHTML = `
+            <div class="movie-img-container">
+                <img src=${movie.Poster} alt="movie poster">
+            </div>
+            
+            <div class="movie-info">
+                <div class="info-line">
+                    <h3>${movie.Title}</h3><div>${movie.Ratings[0].Value}</div><div>${movie.Year}</div>
+                </div>
+                <div class="info-line">
+                    <div>${movie.Runtime}</div><div> ${movie.Genre}</div>
+
+                    <button class="add-btn">
+                        <i class="fa-solid fa-circle-plus"></i>
+                        <p>Add to Watchlist</p>
+                    </button>
+
+                </div>
+                <div class="movie-plot">
+                    <span class="truncated-plot">${truncatedPlot}</span>
+                    <span class="full-plot hidden">${movie.Plot}</span>
+                    ${movie.Plot.length > 150 ? '<button class="full-description-btn">More</button>' : ''}
+                </div>
+            </div>
+            `
+            searchResultsContainer.style.height = "100%"
+            searchResultsContainer.appendChild(movieEl)
+        })
+
+        const addToWatchlistBtns = document.querySelectorAll('.add-btn')
+        addToWatchlistBtns.forEach((btn, index) => {
+            btn.addEventListener('click', function() {
+                const movie = movies[index]
+                addToWatchlist(movie)
+            })
+        })
+
+        const moreInfoBtns = document.querySelectorAll(".full-description-btn")
+        moreInfoBtns.forEach(btn => {
+            btn.addEventListener("click", function() {
+                const plotContainer = btn.parentElement
+                const truncatedPlot = plotContainer.querySelector('.truncated-plot')
+                const movieFullPlot = plotContainer.querySelector('.full-plot')
+
+                if(truncatedPlot.classList.contains("hidden")){
+                    truncatedPlot.classList.remove("hidden")
+                    movieFullPlot.classList.add("hidden")
+                    btn.innerText = "More"
+                }else {
+                    truncatedPlot.classList.add("hidden")
+                    movieFullPlot.classList.remove("hidden")
+                    btn.innerText = "Less"
+                }
+            })
+        })
+    }
+}
+
+function addToWatchlist(movie) {
+    if (!watchlist.some(m => m.imdbID === movie.imdbID))
+    watchlist.push(movie)
+    saveWatchlist()
+    updateWatchlist()
+}
+
+// display watchlist //
+
+function updateWatchlist() {
+    watchlistMainEl.innerHTML = ''
+    if (watchlist.length === 0) {
+        watchlistMainEl.innerHTML = `
+        <div id="watchlist-container">
+            <div class="watchlist-placeholder">Your watchlist is looking a little empty...</div>
+            <div class="add-movies-wrapper">
+                <a href="index.html">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span>Let’s add some movies!</span>
+                </a>
+            </div>
+        </div>        
+        `
+    } else {
+        watchlist.forEach((movie, index) => {
+            const truncatedPlot = movie.Plot.length > 150 ? movie.Plot.substring(0, 150) + '...' : movie.Plot
+
+            const movieEl = document.createElement("div")
+            movieEl.classList = "movie"
+            movieEl.innerHTML = `
+            <div class="movie-img-container">
+                <img src=${movie.Poster} alt="movie poster">
+            </div>
+            
+            <div class="movie-info">
+                <div class="info-line">
+                    <h3>${movie.Title}</h3><div>${movie.Ratings[0].Value}</div><div>${movie.Year}</div>
+                </div>
+                <div class="info-line">
+                    <div>${movie.Runtime}</div><div> ${movie.Genre}</div>
+    
+                    <button class="remove-btn">
+                        <i class="fa-solid fa-circle-minus"></i>
+                        <p>Remove</p>
+                    </button>
+    
+                </div>
+                <div class="movie-plot">
+                    <p class="truncated-plot">${truncatedPlot}</p>
+                    <p class="full-plot" style="display: none">${movie.Plot}</p>
+                    <button class="full-description-btn">More</button>
+                </div>
+            </div>
+            `
+            watchlistMainEl.appendChild(movieEl)
+        })
+    }
+
+    const removeFromWatchlistBtns = document.querySelectorAll('.remove-btn')
+    removeFromWatchlistBtns.forEach((btn, index) => {
+        btn.addEventListener("click", function() {
+            const index = btn.getAttribute('data-index')
+            removeFromWatchlist(index)
+        })
+    })
+}
+
+function removeFromWatchlist(index) {
+    watchlist.splice(index, 1)
+    saveWatchlist()
+    updateWatchlist()
+}
+
+function saveWatchlist() {
+    localStorage.setItem('watchlist', JSON.stringify(watchlist))
+}
+
 
 
 
