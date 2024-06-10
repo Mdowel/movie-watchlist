@@ -102,8 +102,14 @@ function displayResults(movies) {
         const addToWatchlistBtns = document.querySelectorAll('.add-btn')
         addToWatchlistBtns.forEach((btn, index) => {
             btn.addEventListener('click', function() {
+                const responseEl = document.querySelector(".add-btn-response")
+                responseEl.classList.remove("hidden")
+                setTimeout(function(){
+                    responseEl.classList.add("hidden")
+                }, 1000)
                 const movie = movies[index]
                 addToWatchlist(movie)
+
             })
         })
 
@@ -130,9 +136,9 @@ function displayResults(movies) {
 
 function addToWatchlist(movie) {
     if (!watchlist.some(m => m.imdbID === movie.imdbID))
-    watchlist.push(movie)
-    saveWatchlist()
-    updateWatchlist()
+        watchlist.push(movie)
+        saveWatchlist()
+        updateWatchlist()
 }
 
 // display watchlist //

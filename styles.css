@@ -231,6 +231,24 @@ a:visited {
   align-items: center;
 }
 
+.add-btn-response {
+  font-size: inherit;
+  color: whitesmoke;
+  text-shadow: 1px 1px 2px black;
+  background-color: gray;
+  height: fit-content;
+  width: fit-content;
+  border: 1px solid whitesmoke;
+  border-radius: 6px;
+  padding: 0 24px;
+  position: fixed;
+  top: 50%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
 .fa-circle-plus,
 .fa-circle-minus,
 .add-movies-wrapper span {
@@ -277,10 +295,6 @@ a:visited {
 ****************/
 
 @media (min-width: 1000px) {
-  input {
-    background-color: #007BFF;
-  }
-
   header,
   .watchlist-body .header {
     height: 30vh;
@@ -307,10 +321,6 @@ a:visited {
   }
 
   @media (min-width: 1280px) {
-    input {
-      background-color: #2fff00;
-    }
-
     header,
     .watchlist-body .header {
       padding: 0 120px;
