@@ -169,7 +169,7 @@ function updateWatchlist() {
                 <div class="info-line">
                     <div>${movie.Runtime}</div><div> ${movie.Genre}</div>
     
-                    <button class="remove-btn">
+                    <button class="remove-btn" data-index="${index}">
                         <i class="fa-solid fa-circle-minus"></i>
                         <p>Remove</p>
                     </button>
@@ -205,7 +205,7 @@ function updateWatchlist() {
     }
 
     const removeFromWatchlistBtns = document.querySelectorAll('.remove-btn')
-    removeFromWatchlistBtns.forEach((btn, index) => {
+    removeFromWatchlistBtns.forEach((btn) => {
         btn.addEventListener("click", function() {
             const index = btn.getAttribute('data-index')
             removeFromWatchlist(index)
