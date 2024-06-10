@@ -72,7 +72,7 @@ function displayResults(movies) {
             movieEl.className = "movie"
             movieEl.innerHTML = `
             <div class="movie-img-container">
-                <img src=${movie.Poster} alt="movie poster">
+                <img src=${movie.Poster} alt="movie poster not available">
             </div>
             
             <div class="movie-info">
@@ -159,7 +159,7 @@ function updateWatchlist() {
             movieEl.classList = "movie"
             movieEl.innerHTML = `
             <div class="movie-img-container">
-                <img src=${movie.Poster} alt="movie poster">
+                <img src=${movie.Poster} alt="movie poster not available">
             </div>
             
             <div class="movie-info">
