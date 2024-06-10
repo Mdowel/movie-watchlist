@@ -147,12 +147,19 @@ main {
   font-weight: 700;
 }
 
+.fa-star {
+  font-size: 0.85em;
+  margin-right: 2px;
+  transform: translateY(-1px);
+}
+
 .info-line {
   display: flex;
   align-items: center;
   gap: 1em;
   font-size: 0.75rem;
   margin: 0.625em 0;
+  flex-wrap: wrap;
 }
 
 .truncated {

@@ -77,7 +77,7 @@ function displayResults(movies) {
             
             <div class="movie-info">
                 <div class="info-line">
-                    <h3>${movie.Title}</h3><div>${movie.Ratings[0].Value}</div><div>${movie.Year}</div>
+                    <h3>${movie.Title}</h3><div><i class="fa-solid fa-star" style="color: #FFD43B;"></i>${movie.Ratings[0].Value}</div><div>${movie.Year}</div>
                 </div>
                 <div class="info-line">
                     <div>${movie.Runtime}</div><div> ${movie.Genre}</div>
@@ -164,7 +164,7 @@ function updateWatchlist() {
             
             <div class="movie-info">
                 <div class="info-line">
-                    <h3>${movie.Title}</h3><div>${movie.Ratings[0].Value}</div><div>${movie.Year}</div>
+                    <h3>${movie.Title}</h3><div><i class="fa-solid fa-star" style="color: #FFD43B;"></i>${movie.Ratings[0].Value}</div><div>${movie.Year}</div>
                 </div>
                 <div class="info-line">
                     <div>${movie.Runtime}</div><div> ${movie.Genre}</div>
