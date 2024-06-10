@@ -20,7 +20,7 @@ searchBtn.addEventListener("click", function(e) {
 })
 
 function searchMovies(query) {
-    fetch(`http://www.omdbapi.com/?s=${encodeURIComponent(query)}&apikey=488e4582`)
+    fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(query)}&apikey=488e4582`)
     .then(response => response.json())
     .then(data => {
         if (data.Response === "True") {
@@ -42,7 +42,7 @@ function searchMovies(query) {
 }
 
 function getMovieDetails(imdbID) {
-    return fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=488e4582`)
+    return fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=488e4582`)
         .then(response => response.json())
         .then(data => {
             console.log('Fetched movie details:', data);
