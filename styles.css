@@ -35,20 +35,26 @@ header {
     background-position-y: center;
     background-size: 100%;
     background-color: #0E0E0E;
-    color: white;
+    color: whitesmoke;
     height: 25vh;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-content: center;
     padding: 0 1em;
     font-weight: 800;
-    font-size: 1.35rem;
+    font-size: 1rem;
     letter-spacing: 0.001em;
 }
 
+.header-text-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
 header a {
-    font-size: 0.875rem;
-    text-decoration: none;
+  font-size: 0.75rem;
+  text-decoration: none;
+  color: whitesmoke;
 }
 
 .search-bar {
@@ -61,6 +67,7 @@ header a {
   border-radius: 6px;
   width: 85%;
   min-width: 400px;
+  max-width: 650px;
   display: flex;
   align-items: center;
 }
@@ -101,7 +108,6 @@ main {
   display: flex;
   flex-direction: column;
   padding-top: 40px;
-  border: 2px solid pink;
   height: 75vh;
   /* width: 100vw; */
 }
@@ -112,16 +118,16 @@ main {
   height: 14.286em;
   display: flex;
   align-items: center;
-  border: 2px solid blue;
+  border-bottom: 2px solid rgb(120, 120, 120);
   font-size: 0.875rem;
   padding: 2.429em 3.143em;
+  text-wrap: wrap;
 }
 
 .movie-img-container{
   height: 9.188em;
   min-width: 6.188em;
   max-width: 6.188em;
-  border: 2px solid green;
 }
 
 .movie img {
@@ -240,18 +246,74 @@ a:visited {
 
 /* watchlist page */
 
-.watchlist-header {
+.watchlist-body .header {
   width: 100vw;
 }
 
-.watchlist-body {
+.watchlist-body .main{
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 75vh;
+  justify-content: flex-start;
+}
+
+.watchlist-body .movie {
+  margin: 0 auto;
 }
 
 .watchlist-placeholder {
   font-size: 1.25rem;
   font-weight: bold;
-  padding-top: 250px;
+  margin-top: 200px;
+}
+
+/**************** 
+  media queries
+****************/
+
+@media (min-width: 1000px) {
+  input {
+    background-color: #007BFF;
+  }
+
+  header,
+  .watchlist-body .header {
+    height: 30vh;
+    padding: 0 2.5em;
+    font-size: 2rem;
+  }
+
+  header a {
+    font-size: 1.5rem;
+    transform: translateY(5px);
+  }
+
+  .search-bar {
+    top: 28vh;
+  }
+
+  .search-results-container {
+    align-items: center;
+    height: 70vh;
+  }
+
+  .movie {
+    max-width: 1000px;
+  }
+
+  @media (min-width: 1280px) {
+    input {
+      background-color: #2fff00;
+    }
+
+    header,
+    .watchlist-body .header {
+      padding: 0 120px;
+    }
+
+    .header-text-container {
+      max-width: 1300px;
+    }
+  }
 }
