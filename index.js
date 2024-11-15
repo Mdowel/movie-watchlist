@@ -11,13 +11,15 @@ document.addEventListener('DOMContentLoaded', updateWatchlist)
 
 // search for movies //
 
-searchBtn.addEventListener("click", function(e) {
-    e.preventDefault()
-    const query = searchInput.value
-    if (query) {
-        searchMovies(query)
-    }
-})
+if (searchBtn){
+    searchBtn.addEventListener("click", function(e) {
+        e.preventDefault()
+        const query = searchInput.value
+        if (query) {
+            searchMovies(query)
+        }
+    })
+}
 
 function searchMovies(query) {
     fetch(`https://www.omdbapi.com/?s=${encodeURIComponent(query)}&apikey=488e4582`)
@@ -144,70 +146,74 @@ function addToWatchlist(movie) {
 // display watchlist //
 
 function updateWatchlist() {
-    watchlistMainEl.innerHTML = ''
-    if (watchlist.length === 0) {
-        watchlistMainEl.innerHTML = `
-        <div id="watchlist-container">
-            <div class="watchlist-placeholder">Your watchlist is looking a little empty...</div>
-            <div class="add-movies-wrapper">
-                <a href="index.html">
-                    <i class="fa-solid fa-circle-plus"></i>
-                    <span>Let’s add some movies!</span>
-                </a>
-            </div>
-        </div>        
-        `
-    } else {
-        watchlist.forEach((movie, index) => {
-            const truncatedPlot = movie.Plot.length > 150 ? movie.Plot.substring(0, 150) + '...' : movie.Plot
+    if (watchlistMainEl){
+        
+        watchlistMainEl.innerHTML = ''
 
-            const movieEl = document.createElement("div")
-            movieEl.classList = "movie"
-            movieEl.innerHTML = `
-            <div class="movie-img-container">
-                <img src=${movie.Poster} alt="movie poster not available">
-            </div>
-            
-            <div class="movie-info">
-                <div class="info-line">
-                    <h3>${movie.Title}</h3><div><i class="fa-solid fa-star" style="color: #FFD43B;"></i>${movie.Ratings[0].Value}</div><div>${movie.Year}</div>
+        if (watchlist.length === 0) {
+            watchlistMainEl.innerHTML = `
+            <div id="watchlist-container">
+                <div class="watchlist-placeholder">Your watchlist is looking a little empty...</div>
+                <div class="add-movies-wrapper">
+                    <a href="index.html">
+                        <i class="fa-solid fa-circle-plus"></i>
+                        <span>Let’s add some movies!</span>
+                    </a>
                 </div>
-                <div class="info-line">
-                    <div>${movie.Runtime}</div><div> ${movie.Genre}</div>
-    
-                    <button class="remove-btn" data-index="${index}">
-                        <i class="fa-solid fa-circle-minus"></i>
-                        <p>Remove</p>
-                    </button>
-    
-                </div>
-                <div class="movie-plot">
-                    <span class="truncated-plot">${truncatedPlot}</span>
-                    <span class="full-plot hidden">${movie.Plot}</span>
-                    ${movie.Plot.length > 150 ? '<button class="full-description-btn">More</button>' : ''}
-                </div>
-            </div>
+            </div>        
             `
-            watchlistMainEl.appendChild(movieEl)
-        })
-        const moreInfoBtns = document.querySelectorAll(".full-description-btn")
-        moreInfoBtns.forEach(btn => {
-            btn.addEventListener("click", function() {
-                const plotContainer = btn.parentElement
-                const truncatedPlot = plotContainer.querySelector('.truncated-plot')
-                const movieFullPlot = plotContainer.querySelector('.full-plot')
+        } else {
+            watchlist.forEach((movie, index) => {
+                const truncatedPlot = movie.Plot.length > 150 ? movie.Plot.substring(0, 150) + '...' : movie.Plot
 
-                if(truncatedPlot.classList.contains("hidden")){
-                    truncatedPlot.classList.remove("hidden")
-                    movieFullPlot.classList.add("hidden")
-                    btn.innerText = "More"
-                }else {
-                    truncatedPlot.classList.add("hidden")
-                    movieFullPlot.classList.remove("hidden")
-                    btn.innerText = "Less"
-                }
+                const movieEl = document.createElement("div")
+                movieEl.classList = "movie"
+                movieEl.innerHTML = `
+                <div class="movie-img-container">
+                    <img src=${movie.Poster} alt="movie poster not available">
+                </div>
+                
+                <div class="movie-info">
+                    <div class="info-line">
+                        <h3>${movie.Title}</h3><div><i class="fa-solid fa-star" style="color: #FFD43B;"></i>${movie.Ratings[0].Value}</div><div>${movie.Year}</div>
+                    </div>
+                    <div class="info-line">
+                        <div>${movie.Runtime}</div><div> ${movie.Genre}</div>
+        
+                        <button class="remove-btn" data-index="${index}">
+                            <i class="fa-solid fa-circle-minus"></i>
+                            <p>Remove</p>
+                        </button>
+        
+                    </div>
+                    <div class="movie-plot">
+                        <span class="truncated-plot">${truncatedPlot}</span>
+                        <span class="full-plot hidden">${movie.Plot}</span>
+                        ${movie.Plot.length > 150 ? '<button class="full-description-btn">More</button>' : ''}
+                    </div>
+                </div>
+                `
+                watchlistMainEl.appendChild(movieEl)
             })
-        }) 
+            const moreInfoBtns = document.querySelectorAll(".full-description-btn")
+            moreInfoBtns.forEach(btn => {
+                btn.addEventListener("click", function() {
+                    const plotContainer = btn.parentElement
+                    const truncatedPlot = plotContainer.querySelector('.truncated-plot')
+                    const movieFullPlot = plotContainer.querySelector('.full-plot')
+
+                    if(truncatedPlot.classList.contains("hidden")){
+                        truncatedPlot.classList.remove("hidden")
+                        movieFullPlot.classList.add("hidden")
+                        btn.innerText = "More"
+                    } else {
+                        truncatedPlot.classList.add("hidden")
+                        movieFullPlot.classList.remove("hidden")
+                        btn.innerText = "Less"
+                    }
+                })
+            }) 
+        }
     }
 
     const removeFromWatchlistBtns = document.querySelectorAll('.remove-btn')
